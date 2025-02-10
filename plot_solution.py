@@ -43,11 +43,12 @@ def plot_solution(solution):
     fig = plt.figure(figsize=(15, 15))
     ax = fig.add_subplot(111, projection='3d')
 
-    # 繪製每個積木
     for brick, positions in solution:
-        for node_id in positions:
+        # 為避免重複的圖例標籤，可以只對第一個節點設定 label
+        for i, node_id in enumerate(positions):
             _, x, y, z = position_dict[node_id]
-            ax.scatter(x, y, z, c=colors[brick], s=100, label=f'Brick {brick}')
+            ax.scatter(x, y, z, c=colors[brick], s=100, label=f'Brick {brick}' if i == 0 else "")
+            ax.text(x, y, z, str(node_id), fontsize=12, color='black')
 
     # 移除重複的圖例
     handles, labels = plt.gca().get_legend_handles_labels()
